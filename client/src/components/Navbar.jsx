@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  const userRole = "Tourist"; // temporary
+  const { user, setUser } = useAuth();
 
   return (
     <nav style={{ padding: "1rem", background: "#111", color: "#fff" }}>
@@ -10,9 +11,22 @@ function Navbar() {
       <div style={{ display: "flex", gap: "1rem" }}>
         <Link to="/">Home</Link>
 
-        {userRole === "Tourist" && <Link to="/explore">Explore</Link>}
-        {userRole === "Guide" && <Link to="/guide-panel">Guide Panel</Link>}
-        {userRole === "Guardian" && <Link to="/community">Community</Link>}
+        {user?.role === "Tourist" && <Link to="/explore">Explore</Link>}
+        {user?.role === "Guide" && <Link to="/guide-panel">Guide Panel</Link>}
+        {user?.role === "Guardian" && <Link to="/community">Community</Link>}
+      </div>
+
+      {/* TEMP ROLE SWITCH (for testing only) */}
+      <div style={{ marginTop: "0.5rem" }}>
+        <button onClick={() => setUser({ role: "Tourist" })}>
+          Tourist
+        </button>
+        <button onClick={() => setUser({ role: "Guide" })}>
+          Guide
+        </button>
+        <button onClick={() => setUser({ role: "Guardian" })}>
+          Guardian
+        </button>
       </div>
     </nav>
   );
